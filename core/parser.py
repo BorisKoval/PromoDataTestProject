@@ -32,7 +32,10 @@ class BaseZooIterator:
 
         while attempts > 0:
             try:
-                html_text = requests.get(url, headers=HEADERS).text
+                if HEADERS:
+                    html_text = requests.get(url, headers=HEADERS).text
+                else:
+                    html_text = requests.get(url).text
             except ConnectionError:
                 attempts -= 1
             except:
@@ -87,7 +90,10 @@ class ZooCatalogIterator(BaseZooIterator):
 
         pages_len = len(pages_catalog_urls)
         for catalog_href, catalog_title in pages_catalog_urls:
-            log_info(f"Обработка каталога: {catalog_title} (всего {pages_len})")
+            log_info(
+                f"Обработка каталога: {catalog_title} "
+                f"(всего {pages_len} основных категорий)"
+            )
 
             catalog_href = catalog_href.replace(CATALOG_PART, '')
             yield [catalog_title, catalog_href, CATALOG_PART]
