@@ -1,7 +1,7 @@
 {
   "output_directory": "",
   "categories": "",
-  "delay_range_s": "0-1",
+  "delay_range_s": "",
   "max_retries": "2",
   "headers": "",
   "logs_dir": "logs-dir",

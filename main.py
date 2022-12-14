@@ -20,11 +20,9 @@ if __name__ == '__main__':
     products = sys.argv[1] == '--products'
 
     if catalogs:
-        runner = BaseZooCatalogWriter(
-            zoo_row_iterator=ZooCatalogIterator()).run_write
+        writer, iterator = BaseZooCatalogWriter, ZooCatalogIterator
     elif products:
-        runner = BaseZooProductsWriter(
-            zoo_row_iterator=ZooProductsIterator()).run_write
+        writer, iterator = BaseZooProductsWriter, ZooProductsIterator
     else:
         raise SyntaxError(
             'Указанный параметр отличается от "--catalogs" или "--products"'
@@ -33,8 +31,12 @@ if __name__ == '__main__':
     attempts = RESTART_COUNT
     while attempts > 0:
         try:
-            runner()
-        except:
+            print(f'Парсер запущен.')
+            writer(zoo_row_iterator=iterator()).run_write()
+        except Exception as e:
+            print(
+                f'Произошла ошибка в работе парсера.\n{str(e)}\n'
+                f'Происходит перезапуск...')
             attempts -= 1
             time.sleep(INTERVAL_M)
         else:

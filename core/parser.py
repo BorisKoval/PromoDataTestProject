@@ -58,6 +58,10 @@ class BaseZooIterator:
         except:
             log_error(traceback.format_exc())
             return
+        if not pages_tags and 'Доступ заблокирован' in html_text:
+            raise ConnectionError(
+                f'Парсер был заблокирован ресурсом\n {html_text[:300]}'
+            )
 
         return pages_tags, html_bs,
 

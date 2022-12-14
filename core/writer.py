@@ -3,6 +3,7 @@ import datetime
 import os.path
 
 from .config import OUT_DIR
+from .logger import run_with_log
 
 
 class BaseZooWriter:
@@ -24,6 +25,7 @@ class BaseZooWriter:
         self.out_csv_path = os.path.join(out_csv_path, out_csv_name)
         self.zoo_row_iterator = zoo_row_iterator
 
+    @run_with_log
     def run_write(self):
         """Запуск записи данных в файл возвращаемых итератором"""
 

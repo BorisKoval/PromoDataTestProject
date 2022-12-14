@@ -1,3 +1,4 @@
+import datetime
 import logging
 import os
 import traceback
@@ -26,8 +27,14 @@ def setup_logger(name, log_file, level=logging.INFO):
     return logger
 
 
-error_logger = setup_logger('error_logger', 'errors.log', level=logging.ERROR)
-info_logger = setup_logger('info_logger', 'info.log')
+error_logger = setup_logger(
+    'error_logger',
+    f'errors_{datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")}.log',
+    level=logging.ERROR)
+
+info_logger = setup_logger(
+    'info_logger',
+    f'info_{datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")}.log')
 
 
 #todo Не было понятно, что именно из успешных действий нужно логировать
